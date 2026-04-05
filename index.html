@@ -447,8 +447,6 @@
 
   /* =============================================
      BLOCK 10: CONTACT & FOOTER
-     Contact = a centered call-to-action card.
-     Footer = minimal one-liner.
      ============================================= */
   .contact-card {
     background: var(--bg2);
@@ -470,9 +468,7 @@
   }
 
   /* =============================================
-     BLOCK 11: RESPONSIVE (mobile)
-     Anything inside @media only applies when the
-     screen is narrower than 640px (phone).
+     BLOCK 11: RESPONSIVE (
      ============================================= */
   @media (max-width: 640px) {
     nav { padding: 1rem 1.5rem; }
@@ -911,9 +907,22 @@
     <h2>Let's work together</h2>
     <p>Open to working student positions, internships and interesting data projects.</p>
     <div class="contact-links">
-      <a href="mailto:faustinovazquezgabino@gmail.com" class="btn-primary">Send email</a>
-      <a href="https://github.com/faustvg" target="_blank" rel="noopener" class="btn-ghost">GitHub ↗</a>
-      <a href="https://linkedin.com/in/faustvg" target="_blank" rel="noopener" class="btn-ghost">LinkedIn ↗</a>
+    <a href="mailto:faustinovazquezgabino@gmail.com" class="btn-primary">Send email</a>
+    <a href="https://github.com/faustvg" target="_blank" rel="noopener" class="btn-ghost">GitHub ↗</a>
+    <a href="https://linkedin.com/in/faustvg" target="_blank" rel="noopener" class="btn-ghost">LinkedIn ↗</a>
+    </div>
+
+    <!-- CV download row — separate from main buttons -->
+    <div class="cv-download">
+    <span class="cv-label">Download CV</span>
+    <div class="cv-btns">
+        <a href="cv/cv-english.pdf" download class="cv-btn">
+        🇬🇧 English
+        </a>
+        <a href="cv/cv-deutsch.pdf" download class="cv-btn">
+        🇩🇪 Deutsch
+        </a>
+    </div>
     </div>
   </div>
 </section>

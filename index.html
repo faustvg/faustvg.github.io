@@ -4,421 +4,896 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Faustino Vazquez — Data Scientist</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg: #0a0a0a;
-      --bg2: #111111;
-      --bg3: #1a1a1a;
-      --border: rgba(255,255,255,0.08);
-      --text: #f0f0ee;
-      --muted: #888;
-      --accent: #4f8ef7;
-    }
-
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
-
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1.2rem 3rem;
-      background: rgba(10,10,10,0.7);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    nav .logo { font-size: 14px; font-weight: 500; letter-spacing: 0.05em; color: var(--text); }
-    nav .links { display: flex; gap: 2rem; align-items: center; }
-    nav .links a {
-      font-size: 13px; color: var(--muted); text-decoration: none;
-      transition: color 0.2s;
-    }
-    nav .links a:hover { color: var(--text); }
-    nav .phone { font-size: 12px; color: var(--muted); }
-
-    /* HERO */
-    .hero {
-      height: 100vh; min-height: 600px;
-      display: flex; align-items: center;
-      padding: 0 3rem;
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(135deg, #0a0a0a 50%, #0d1a2e 100%);
-    }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 70% 50%, rgba(79,142,247,0.08) 0%, transparent 60%);
-    }
-    .hero-content { position: relative; z-index: 1; max-width: 600px; }
-    .hero-tag {
-      display: inline-block; font-size: 11px; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--accent);
-      border: 1px solid rgba(79,142,247,0.3);
-      padding: 4px 12px; border-radius: 20px; margin-bottom: 1.5rem;
-    }
-    .hero h1 {
-      font-size: clamp(36px, 6vw, 64px);
-      font-weight: 300; line-height: 1.1; margin-bottom: 0.3rem;
-      letter-spacing: -0.02em;
-    }
-    .hero h1 strong { font-weight: 600; display: block; }
-    .hero .subtitle {
-      font-size: 16px; color: var(--muted); margin: 1.2rem 0 2rem;
-      line-height: 1.6; max-width: 460px;
-    }
-    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--accent); color: white; border: none;
-      padding: 10px 22px; border-radius: 6px; font-size: 13px;
-      cursor: pointer; text-decoration: none; display: inline-block;
-      transition: opacity 0.2s;
-    }
-    .btn-primary:hover { opacity: 0.85; }
-    .btn-ghost {
-      background: transparent; color: var(--text);
-      border: 1px solid var(--border); padding: 10px 22px;
-      border-radius: 6px; font-size: 13px; cursor: pointer;
-      text-decoration: none; display: inline-block;
-      transition: border-color 0.2s;
-    }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.3); }
-
-    /* SCROLL HINT */
-    .scroll-hint {
-      position: absolute; bottom: 2rem; left: 50%;
-      transform: translateX(-50%);
-      font-size: 11px; color: var(--muted); letter-spacing: 0.1em;
-      text-transform: uppercase; display: flex; flex-direction: column;
-      align-items: center; gap: 8px;
-    }
-    .scroll-hint::after {
-      content: '';
-      width: 1px; height: 40px;
-      background: linear-gradient(to bottom, var(--muted), transparent);
-    }
-
-    /* SECTIONS */
-    section { max-width: 900px; margin: 0 auto; padding: 5rem 3rem; }
-    .section-label {
-      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 0.5rem;
-    }
-    .section-title {
-      font-size: 28px; font-weight: 400; margin-bottom: 3rem;
-      color: var(--text);
-    }
-
-    /* ABOUT */
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
-    .about-text p { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
-    .about-text p strong { color: var(--text); font-weight: 500; }
-    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .stat-card {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1.2rem;
-    }
-    .stat-card .num { font-size: 28px; font-weight: 300; color: var(--text); }
-    .stat-card .label { font-size: 11px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-
-    /* PROJECTS */
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-    .project-card {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.5rem;
-      transition: border-color 0.2s, transform 0.2s;
-      text-decoration: none; color: inherit; display: block;
-    }
-    .project-card:hover { border-color: rgba(79,142,247,0.4); transform: translateY(-2px); }
-    .project-card .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
-    .project-card .lang-tag {
-      font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
-      padding: 3px 8px; border-radius: 4px;
-    }
-    .lang-python { background: rgba(59,130,246,0.15); color: #60a5fa; }
-    .lang-cpp    { background: rgba(168,85,247,0.15); color: #c084fc; }
-    .lang-r      { background: rgba(34,197,94,0.15);  color: #4ade80; }
-    .lang-sql    { background: rgba(251,146,60,0.15);  color: #fb923c; }
-    .lang-ml     { background: rgba(79,142,247,0.15);  color: #4f8ef7; }
-    .arrow { font-size: 18px; color: var(--muted); transition: color 0.2s; }
-    .project-card:hover .arrow { color: var(--accent); }
-    .project-card h3 { font-size: 15px; font-weight: 500; margin-bottom: 0.5rem; }
-    .project-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
-
-    /* SKILLS */
-    .skills-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .skills-section section { padding: 4rem 3rem; }
-    .skills-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2.5rem; }
-    .skill-group h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 1rem; }
-    .skill-list { display: flex; flex-direction: column; gap: 8px; }
-    .skill-item { font-size: 14px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
-    .skill-item::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
-
-    /* PASSIONS */
-    .passions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-    .passion-card {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.5rem; text-align: center;
-    }
-    .passion-icon { font-size: 28px; margin-bottom: 0.8rem; }
-    .passion-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 0.4rem; }
-    .passion-card p { font-size: 12px; color: var(--muted); line-height: 1.5; }
-
-    /* CONTACT */
-    .contact-inner {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 16px; padding: 3rem; text-align: center;
-    }
-    .contact-inner h2 { font-size: 28px; font-weight: 400; margin-bottom: 0.8rem; }
-    .contact-inner p { font-size: 15px; color: var(--muted); margin-bottom: 2rem; }
-    .contact-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-
-    /* FOOTER */
-    footer {
-      text-align: center; padding: 2rem;
-      font-size: 12px; color: var(--muted);
-      border-top: 1px solid var(--border);
-    }
-
-    @media (max-width: 600px) {
-      nav { padding: 1rem 1.5rem; }
-      .hero { padding: 0 1.5rem; }
-      section { padding: 4rem 1.5rem; }
-      .about-grid { grid-template-columns: 1fr; }
-    }
-  </style>
 </head>
+
+
+<style>
+  /* =============================================
+     BLOCK 2: DESIGN SYSTEM
+     These are like variables in Python.
+     Change one value here → updates the whole site.
+     ============================================= */
+  :root {
+    --bg:       #0a0a0a;   /* main background (near black) */
+    --bg2:      #111111;   /* slightly lighter, used for cards */
+    --bg3:      #1c1c1c;   /* even lighter, for hover states */
+    --border:   rgba(255,255,255,0.07); /* subtle white border */
+    --text:     #f0f0ee;   /* main text (off-white, easier on eyes) */
+    --muted:    #777777;   /* secondary text (gray) */
+    --accent:   #4f8ef7;   /* blue highlight color */
+  }
+
+
+
+  /* =============================================
+     BLOCK 3: RESET & BASE
+     Browsers have their own default styles (margins,
+     font sizes, etc.) that differ between Chrome/Firefox.
+     This reset removes them so you start from zero.
+     ============================================= */
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* width includes padding, more intuitive */
+  }
+
+  html {
+    scroll-behavior: smooth; /* makes anchor links (#projects) scroll smoothly */
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  a {
+    text-decoration: none; /* removes underline from all links by default */
+    color: inherit;        /* links take the color of their parent element */
+  }
+
+
+  /* =============================================
+     BLOCK 4: UTILITY CLASSES
+     Small reusable styles you apply directly in HTML.
+     Like helper functions in Python.
+     ============================================= */
+
+  /* Section wrapper — centers content and limits width */
+  .section {
+    max-width: 920px;
+    margin: 0 auto;        /* auto left+right margin = centered */
+    padding: 5rem 2rem;    /* 5rem top/bottom, 2rem left/right */
+  }
+
+  /* The small uppercase label above section titles */
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  /* The large section heading */
+  .section-title {
+    font-size: clamp(22px, 4vw, 32px); /* scales with screen size */
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 3rem;
+  }
+
+  /* Divider line between sections */
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* Two button styles used throughout the page */
+  .btn-primary {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: opacity 0.2s; /* smooth fade on hover */
+  }
+  .btn-primary:hover { opacity: 0.82; }
+
+  .btn-ghost {
+    display: inline-block;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.25); }
+  
+
+
+
+  /* =============================================
+     BLOCK 5: NAVIGATION
+     Fixed to the top of the screen.
+     backdrop-filter creates the frosted glass effect.
+     ============================================= */
+  nav {
+    position: fixed;       /* stays at top even when you scroll */
+    top: 0; left: 0; right: 0;
+    z-index: 100;          /* sits on top of everything else */
+    display: flex;
+    justify-content: space-between; /* logo left, links right */
+    align-items: center;
+    padding: 1.1rem 2.5rem;
+    background: rgba(10, 10, 10, 0.75);
+    backdrop-filter: blur(14px); /* frosted glass effect */
+    border-bottom: 1px solid var(--border);
+  }
+
+  nav .logo {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--text);
+  }
+
+  nav .nav-links {
+    display: flex;
+    gap: 2rem;             /* space between links */
+    list-style: none;      /* removes bullet points from <ul> */
+  }
+
+  nav .nav-links a {
+    font-size: 13px;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+
+  nav .nav-links a:hover { color: var(--text); }
+
+
+  /* =============================================
+     BLOCK 6: HERO SECTION
+     The full-screen first view.
+     Uses flexbox to center content vertically.
+     ============================================= */
+  .hero {
+    min-height: 100vh;     /* 100% of the viewport height */
+    display: flex;
+    align-items: center;   /* vertical center */
+    padding: 6rem 2.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+    /* Dark gradient background — no image needed */
+    background: radial-gradient(ellipse at 65% 50%,
+      rgba(79, 142, 247, 0.07) 0%,
+      transparent 60%),
+      var(--bg);
+  }
+
+  .hero-content { max-width: 600px; position: relative; z-index: 1; }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(79, 142, 247, 0.35);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(38px, 7vw, 72px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 strong {
+    font-weight: 600;
+    display: block; /* puts it on its own line */
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 460px;
+    margin-bottom: 2rem;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+
+  .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* Animated scroll indicator at the bottom */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted);
+    animation: bob 2s ease-in-out infinite;
+  }
+  .scroll-hint::after {
+    content: '';
+    width: 1px; height: 36px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(5px); }
+  }
+
+
+
+
+
+
+  /* =============================================
+     BLOCK 7: EXPERIENCE TIMELINE
+     Each job is a card with a logo, role, dates,
+     bullet points, and tech tags.
+     ============================================= */
+  .timeline { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .exp-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem;
+    transition: border-color 0.2s;
+  }
+  .exp-card:hover { border-color: rgba(255,255,255,0.15); }
+
+  /* Top row: logo + title + date */
+  .exp-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.1rem;
+    margin-bottom: 1.1rem;
+  }
+
+  /* Logo box */
+  .exp-logo {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; /* never squish the logo */
+    overflow: hidden;
+  }
+  .exp-logo img  { width: 28px; height: 28px; object-fit: contain; filter: brightness(0) invert(1); }
+  .exp-logo svg  { width: 36px; height: auto; }
+
+  .exp-meta { flex: 1; }
+  .exp-meta h3  { font-size: 15px; font-weight: 500; margin-bottom: 2px; }
+  .exp-meta .exp-role { font-size: 13px; color: var(--muted); }
+
+  .exp-date {
+    font-size: 11px; color: var(--muted);
+    white-space: nowrap; /* never wrap the date to two lines */
+    padding-top: 3px;
+  }
+
+  /* Bullet points */
+  .exp-bullets {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 6px;
+    margin-bottom: 1.1rem;
+  }
+  .exp-bullets li {
+    font-size: 13px; color: var(--muted); line-height: 1.6;
+    padding-left: 1rem;
+    position: relative;
+  }
+  .exp-bullets li::before {
+    content: '·';          /* bullet character */
+    position: absolute; left: 0;
+    color: var(--accent);
+  }
+
+  /* Tech tags row */
+  .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .exp-tag {
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 3px 9px;
+    border-radius: 4px;
+  }
+
+
+
+  /* =============================================
+     BLOCK 8: PROJECT CARDS
+     A responsive grid that auto-fits columns.
+     Each card links to a GitHub repo.
+     ============================================= */
+  .projects-grid {
+    display: grid;
+    /* auto-fit: fill as many columns as fit.
+       minmax(260px, 1fr): each column min 260px, max equal share */
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .proj-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem;
+    display: flex; flex-direction: column; gap: 0.6rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .proj-card:hover {
+    border-color: rgba(79, 142, 247, 0.4);
+    transform: translateY(-2px); /* tiny lift on hover */
+  }
+
+  .proj-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Language badge — different color per language */
+  .lang-badge {
+    font-size: 10px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    padding: 3px 9px; border-radius: 4px;
+  }
+  .lang-py  { background: rgba(59,130,246,0.15); color: #60a5fa; }
+  .lang-sql { background: rgba(251,146,60,0.15);  color: #fb923c; }
+  .lang-cpp { background: rgba(168,85,247,0.15);  color: #c084fc; }
+  .lang-r   { background: rgba(34,197,94,0.15);   color: #4ade80; }
+  .lang-ml  { background: rgba(79,142,247,0.15);  color: #4f8ef7; }
+
+  .proj-arrow { font-size: 16px; color: var(--muted); transition: color 0.2s; }
+  .proj-card:hover .proj-arrow { color: var(--accent); }
+
+  .proj-card h3 { font-size: 14px; font-weight: 500; }
+  .proj-card p  { font-size: 12px; color: var(--muted); line-height: 1.6; flex: 1; }
+
+  /* Optional: small stat row at the bottom of a card */
+  .proj-stat {
+    font-size: 11px; color: var(--accent);
+    margin-top: auto; /* push to bottom of card */
+  }
+
+
+
+
+  /* =============================================
+     BLOCK 9: SKILLS, EDUCATION & PASSIONS
+     Skills = 4-column grid of grouped lists
+     Education = cards similar to experience
+     Passions = simple icon cards
+     ============================================= */
+
+  /* Skills */
+  .skills-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 2.5rem;
+  }
+  .skill-group h4 {
+    font-size: 10px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--accent); margin-bottom: 0.9rem;
+  }
+  .skill-list { display: flex; flex-direction: column; gap: 7px; }
+  .skill-item {
+    font-size: 13px; color: var(--muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .skill-item::before {
+    content: ''; width: 3px; height: 3px;
+    border-radius: 50%; background: var(--border);
+    flex-shrink: 0;
+  }
+
+  /* Education — reuses .exp-card styles, just different content */
+  .edu-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex; align-items: flex-start; gap: 1rem;
+    transition: border-color 0.2s;
+  }
+  .edu-card:hover { border-color: rgba(255,255,255,0.15); }
+
+  .edu-logo {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; overflow: hidden;
+  }
+  .edu-logo img { width: 28px; height: 28px; object-fit: contain; filter: brightness(0) invert(1); }
+
+  .edu-meta h3   { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+  .edu-meta .edu-degree { font-size: 13px; color: var(--muted); }
+  .edu-meta .edu-date   { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* Passions */
+  .passions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+  }
+  .passion-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem;
+    display: flex; flex-direction: column; gap: 0.6rem;
+  }
+  .passion-icon { font-size: 24px; }
+  .passion-card h3 { font-size: 14px; font-weight: 500; }
+  .passion-card p  { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+
+
+  /* =============================================
+     BLOCK 10: CONTACT & FOOTER
+     Contact = a centered call-to-action card.
+     Footer = minimal one-liner.
+     ============================================= */
+  .contact-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 3.5rem 2rem;
+    text-align: center;
+  }
+  .contact-card h2 { font-size: 26px; font-weight: 400; margin-bottom: 0.7rem; }
+  .contact-card p  { font-size: 14px; color: var(--muted); margin-bottom: 2rem; }
+  .contact-links   { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  /* =============================================
+     BLOCK 11: RESPONSIVE (mobile)
+     Anything inside @media only applies when the
+     screen is narrower than 640px (phone).
+     ============================================= */
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.5rem; }
+    nav .nav-links { gap: 1.2rem; }
+    .hero { padding: 5rem 1.5rem 3rem; }
+    .section { padding: 3.5rem 1.5rem; }
+    .exp-date { display: none; } /* hide dates on small screens, too cramped */
+  }
+
+</style>
+
+
+
+
 <body>
 
-<!-- NAV -->
+<!-- =============================================
+     BLOCK 12: NAVIGATION HTML
+     <nav> = semantic element for navigation.
+     <ul><li><a> = the proper way to make a link list.
+     href="#projects" scrolls to the element with id="projects"
+     ============================================= -->
 <nav>
   <span class="logo">Faustino Vazquez</span>
-  <div class="links">
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#skills">Skills</a>
-    <a href="#passions">Passions</a>
-    <a href="#contact">Contact</a>
-  </div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#passions">Passions</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
+
+
+<!-- =============================================
+     BLOCK 13: HERO HTML
+     The first thing people see.
+     <strong> makes text bold AND semantically "important".
+     The scroll-hint is purely decorative — uses CSS animation.
+     ============================================= -->
+<header class="hero">
   <div class="hero-content">
-    <span class="hero-tag">Available for opportunities</span>
+    <span class="hero-tag">Open to opportunities · Ingolstadt, Germany</span>
+
     <h1>Faustino<strong>Vazquez</strong></h1>
-    <p class="subtitle">
-      Data Science student at KU Eichstätt-Ingolstadt.<br>
-      Former intern at <strong style="color:#f0f0ee">Audi AG</strong>.
-      I build machine learning models, data pipelines, and analytical tools.
+
+    <p class="hero-sub">
+      Data Science student at <strong>KU Eichstätt-Ingolstadt</strong>.<br>
+      Former intern &amp; thesis student at <strong>Audi AG</strong>.<br>
+      I build ML models, ETL pipelines, and data-driven tools.
     </p>
+
     <div class="hero-btns">
       <a href="#projects" class="btn-primary">View projects</a>
       <a href="https://github.com/faustvg" target="_blank" class="btn-ghost">GitHub ↗</a>
+      <a href="https://linkedin.com/in/faustvg" target="_blank" class="btn-ghost">LinkedIn ↗</a>
       <a href="#contact" class="btn-ghost">Contact</a>
     </div>
   </div>
   <div class="scroll-hint">scroll</div>
-</div>
+</header>
 
-<!-- ABOUT -->
-<section id="about">
-  <p class="section-label">About</p>
-  <h2 class="section-title">Who I am</h2>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>
-        I'm a <strong>Data Science</strong> student from Toluca, Mexico, currently living
-        and studying in Ingolstadt, Bavaria. My degree at
-        <strong>KU Eichstätt-Ingolstadt</strong> covers machine learning, algorithms,
-        statistics, and business analytics.
-      </p>
-      <p>
-        In 2025 I completed a 6-month internship at <strong>Audi AG</strong>, where I
-        applied data science methods in a real industrial environment.
-      </p>
-      <p>
-        I enjoy turning messy data into clear insights — and writing clean,
-        efficient code to do it.
-      </p>
+
+
+
+<!-- =============================================
+     BLOCK 14: EXPERIENCE HTML
+     Each .exp-card = one job.
+     The Audi logo is drawn with pure SVG circles —
+     4 overlapping circles = the 4 rings. No image file needed.
+     The university logos use Wikipedia's CDN (always online).
+     ============================================= -->
+<hr class="section-divider">
+<section id="experience" class="section">
+  <p class="section-label">Experience</p>
+  <h2 class="section-title">Where I've worked</h2>
+
+  <div class="timeline">
+
+    <!-- JOB 1: Audi Thesis -->
+    <div class="exp-card">
+      <div class="exp-header">
+
+        <!-- Audi logo: 4 rings = 4 overlapping SVG circles -->
+        <div class="exp-logo">
+          <svg viewBox="0 0 72 24" width="40">
+            <circle cx="9"  cy="12" r="8" fill="none" stroke="white" stroke-width="1.8"/>
+            <circle cx="24" cy="12" r="8" fill="none" stroke="white" stroke-width="1.8"/>
+            <circle cx="39" cy="12" r="8" fill="none" stroke="white" stroke-width="1.8"/>
+            <circle cx="54" cy="12" r="8" fill="none" stroke="white" stroke-width="1.8"/>
+          </svg>
+        </div>
+
+        <div class="exp-meta">
+          <h3>Audi AG</h3>
+          <span class="exp-role">Bachelor Thesis · Database for Packaging Planning</span>
+        </div>
+        <span class="exp-date">Sep 2025 – Feb 2026</span>
+      </div>
+
+      <ul class="exp-bullets">
+        <li>Designed a centralized data architecture integrating heterogeneous sources — reduced manual work by ~8h/week</li>
+        <li>Built ETL pipelines with KNIME, SQL and Power Automate for schema harmonisation and data cleaning</li>
+        <li>Developed an Oracle APEX application for process documentation and BI reporting</li>
+      </ul>
+
+      <div class="exp-tags">
+        <span class="exp-tag">SQL</span>
+        <span class="exp-tag">KNIME</span>
+        <span class="exp-tag">Oracle APEX</span>
+        <span class="exp-tag">Power Automate</span>
+        <span class="exp-tag">ETL</span>
+        <span class="exp-tag">Power BI</span>
+      </div>
     </div>
-    <div class="about-stats">
-      <div class="stat-card">
-        <div class="num">150</div>
-        <div class="label">ECTS completed</div>
+
+    <!-- JOB 2: Audi Internship -->
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-logo">
+          <svg viewBox="0 0 72 24" width="40">
+            <circle cx="9"  cy="12" r="8" fill="none" stroke="white" stroke-width="1.8"/>
+            <circle cx="24" cy="12" r="8" fill="none" stroke="white" stroke-width="1.8"/>
+            <circle cx="39" cy="12" r="8" fill="none" stroke="white" stroke-width="1.8"/>
+            <circle cx="54" cy="12" r="8" fill="none" stroke="white" stroke-width="1.8"/>
+          </svg>
+        </div>
+        <div class="exp-meta">
+          <h3>Audi AG</h3>
+          <span class="exp-role">Internship · Information Processes Supply Chain</span>
+        </div>
+        <span class="exp-date">Mar 2025 – Aug 2025</span>
       </div>
-      <div class="stat-card">
-        <div class="num">6mo</div>
-        <div class="label">Audi AG internship</div>
-      </div>
-      <div class="stat-card">
-        <div class="num">4+</div>
-        <div class="label">Languages & tools</div>
-      </div>
-      <div class="stat-card">
-        <div class="num">2026</div>
-        <div class="label">Expected graduation</div>
+
+      <ul class="exp-bullets">
+        <li>Built automated data pipelines with KNIME, SQL and Power Automate replacing manual reporting processes</li>
+        <li>Created Power BI dashboards for Supply Chain KPI tracking — saved ~3h/week in reporting time</li>
+        <li>Developed internal workflow apps with Power Apps and Power Automate for cross-team coordination</li>
+      </ul>
+
+      <div class="exp-tags">
+        <span class="exp-tag">Power BI</span>
+        <span class="exp-tag">Power Apps</span>
+        <span class="exp-tag">SQL</span>
+        <span class="exp-tag">KNIME</span>
+        <span class="exp-tag">SharePoint</span>
       </div>
     </div>
+
   </div>
 </section>
 
-<!-- PROJECTS -->
-<section id="projects">
+
+
+<!-- =============================================
+     BLOCK 15: PROJECTS HTML
+     Each card is an <a> tag (a link) — the whole
+     card is clickable and goes to your GitHub repo.
+     Replace href="#" with the real URL for each project.
+     ============================================= -->
+<hr class="section-divider">
+<section id="projects" class="section">
   <p class="section-label">Work</p>
   <h2 class="section-title">Projects</h2>
+
   <div class="projects-grid">
 
-    <!-- Replace href values with your real GitHub repo URLs -->
-    <a href="https://github.com/faustvg" target="_blank" class="project-card">
-      <div class="card-top">
-        <span class="lang-tag lang-ml">Machine Learning</span>
-        <span class="arrow">↗</span>
+    <!-- PROJECT 1 -->
+    <a href="https://github.com/faustvg/YOUR-REPO-NAME" target="_blank" class="proj-card">
+      <div class="proj-top">
+        <span class="lang-badge lang-py">Python</span>
+        <span class="proj-arrow">↗</span>
       </div>
-      <h3>Your ML Project</h3>
-      <p>Replace this with a real project from your GitHub. What did it do? What problem did it solve?</p>
+      <h3>HackaTUM Trading Algorithm</h3>
+      <p>Algorithmic trading strategies for the TUM hackathon. Arbitrage for dual-listed assets and sentiment-based signals from financial news. 5th place finish.</p>
+      <span class="proj-stat">🏆 5th place · HackaTUM 2024 &amp; 2025</span>
     </a>
 
-    <a href="https://github.com/faustvg" target="_blank" class="project-card">
-      <div class="card-top">
-        <span class="lang-tag lang-python">Python</span>
-        <span class="arrow">↗</span>
+    <!-- PROJECT 2 -->
+    <a href="https://github.com/faustvg/YOUR-REPO-NAME" target="_blank" class="proj-card">
+      <div class="proj-top">
+        <span class="lang-badge lang-py">Python</span>
+        <span class="proj-arrow">↗</span>
       </div>
-      <h3>Your Python Project</h3>
-      <p>A data pipeline, analysis tool, or automation script. Describe it in 1-2 sentences.</p>
+      <h3>Cryptocurrency Trading Bot</h3>
+      <p>Algorithmic trading strategies using the Binance API for market data and automated execution. Includes price analysis, signal generation and backtesting pipelines.</p>
     </a>
 
-    <a href="https://github.com/faustvg" target="_blank" class="project-card">
-      <div class="card-top">
-        <span class="lang-tag lang-sql">SQL</span>
-        <span class="arrow">↗</span>
+    <!-- PROJECT 3 -->
+    <a href="https://github.com/faustvg/YOUR-REPO-NAME" target="_blank" class="proj-card">
+      <div class="proj-top">
+        <span class="lang-badge lang-ml">Machine Learning</span>
+        <span class="proj-arrow">↗</span>
       </div>
-      <h3>Your SQL Project</h3>
-      <p>Database design, queries, or reporting work. What was the business question you answered?</p>
+      <h3>Hybrid Time Series Forecasting</h3>
+      <p>Framework combining Holt-Winters, ARIMA, SARIMAX and N-BEATS neural models. Evaluated on the M4 Competition dataset (100k time series). Best sMAPE ~0.16.</p>
     </a>
 
-    <a href="https://github.com/faustvg" target="_blank" class="project-card">
-      <div class="card-top">
-        <span class="lang-tag lang-cpp">C++</span>
-        <span class="arrow">↗</span>
+    <!-- PROJECT 4 -->
+    <a href="https://github.com/faustvg/YOUR-REPO-NAME" target="_blank" class="proj-card">
+      <div class="proj-top">
+        <span class="lang-badge lang-ml">Python · ML</span>
+        <span class="proj-arrow">↗</span>
       </div>
-      <h3>Your C++ Project</h3>
-      <p>Algorithm implementation, system-level code, or university project. What did you build?</p>
+      <h3>Stellar Classification</h3>
+      <p>Multi-class classification of stars, galaxies and quasars. Compared Logistic Regression, Random Forest, Gradient Boosting, SVM and KNN. 89% accuracy, ROC-AUC 0.96.</p>
+      <span class="proj-stat">89% accuracy · ROC-AUC 0.96</span>
     </a>
 
-    <a href="https://github.com/faustvg" target="_blank" class="project-card">
-      <div class="card-top">
-        <span class="lang-tag lang-r">R</span>
-        <span class="arrow">↗</span>
+    <!-- PROJECT 5 -->
+    <a href="https://github.com/faustvg/YOUR-REPO-NAME" target="_blank" class="proj-card">
+      <div class="proj-top">
+        <span class="lang-badge lang-sql">SQL</span>
+        <span class="proj-arrow">↗</span>
       </div>
-      <h3>Your R Project</h3>
-      <p>Statistical model or data visualization. What dataset did you work with?</p>
+      <h3>Supply Chain Data Pipeline</h3>
+      <p>Automated reporting pipeline built during the Audi internship. Replaced manual Excel processes with SQL + KNIME workflows feeding Power BI dashboards.</p>
     </a>
 
-    <a href="https://github.com/faustvg" target="_blank" class="project-card">
-      <div class="card-top">
-        <span class="lang-tag lang-ml">Data Science</span>
-        <span class="arrow">↗</span>
+    <!-- PROJECT 6 -->
+    <a href="https://github.com/faustvg/YOUR-REPO-NAME" target="_blank" class="proj-card">
+      <div class="proj-top">
+        <span class="lang-badge lang-r">R</span>
+        <span class="proj-arrow">↗</span>
       </div>
-      <h3>Digital Project — Audi AG</h3>
-      <p>Business Analytics and Data Science project completed during the Audi AG internship.</p>
+      <h3>Statistical Learning Project</h3>
+      <p>University coursework in statistical modelling and learning theory. Feature engineering, model comparison and cross-validation in R.</p>
     </a>
 
   </div>
 </section>
 
-<!-- SKILLS -->
-<div class="skills-section">
-  <section id="skills">
-    <p class="section-label">Expertise</p>
-    <h2 class="section-title">Skills</h2>
-    <div class="skills-cols">
-      <div class="skill-group">
-        <h4>Languages</h4>
-        <div class="skill-list">
-          <span class="skill-item">Python</span>
-          <span class="skill-item">C++</span>
-          <span class="skill-item">R</span>
-          <span class="skill-item">SQL</span>
-          <span class="skill-item">HTML & CSS</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h4>Data & ML</h4>
-        <div class="skill-list">
-          <span class="skill-item">Machine Learning</span>
-          <span class="skill-item">Statistical Modelling</span>
-          <span class="skill-item">Data Analysis</span>
-          <span class="skill-item">Business Analytics</span>
-          <span class="skill-item">Signal Processing</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h4>Tools</h4>
-        <div class="skill-list">
-          <span class="skill-item">Git & GitHub</span>
-          <span class="skill-item">VS Code</span>
-          <span class="skill-item">Simulation & Optimization</span>
-          <span class="skill-item">Software Engineering</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h4>Languages (spoken)</h4>
-        <div class="skill-list">
-          <span class="skill-item">Spanish (native)</span>
-          <span class="skill-item">German</span>
-          <span class="skill-item">English</span>
-        </div>
+
+
+
+<!-- =============================================
+     BLOCK 16: SKILLS HTML
+     4 groups, each a simple list.
+     No progress bars — those look fake on a portfolio.
+     Clean lists are more honest and readable.
+     ============================================= -->
+<hr class="section-divider">
+<section id="skills" class="section">
+  <p class="section-label">Expertise</p>
+  <h2 class="section-title">Skills</h2>
+
+  <div class="skills-cols">
+
+    <div class="skill-group">
+      <h4>Languages</h4>
+      <div class="skill-list">
+        <span class="skill-item">Python</span>
+        <span class="skill-item">SQL</span>
+        <span class="skill-item">R</span>
+        <span class="skill-item">C++</span>
       </div>
     </div>
-  </section>
-</div>
 
-<!-- PASSIONS -->
-<section id="passions">
-  <p class="section-label">Beyond code</p>
+    <div class="skill-group">
+      <h4>Data Engineering</h4>
+      <div class="skill-list">
+        <span class="skill-item">ETL Pipelines</span>
+        <span class="skill-item">KNIME</span>
+        <span class="skill-item">Oracle Database</span>
+        <span class="skill-item">Power Automate</span>
+        <span class="skill-item">SharePoint</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h4>Machine Learning</h4>
+      <div class="skill-list">
+        <span class="skill-item">Scikit-learn</span>
+        <span class="skill-item">Time Series</span>
+        <span class="skill-item">Statistical Modelling</span>
+        <span class="skill-item">Algorithmic Trading</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h4>Visualisation & Tools</h4>
+      <div class="skill-list">
+        <span class="skill-item">Power BI</span>
+        <span class="skill-item">Oracle APEX</span>
+        <span class="skill-item">Power Apps</span>
+        <span class="skill-item">Git & GitHub</span>
+        <span class="skill-item">Jupyter</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+<!-- =============================================
+     BLOCK 17: EDUCATION HTML
+     University logos loaded from Wikipedia's image CDN.
+     These URLs are permanent and load on any browser.
+     filter: brightness(0) invert(1) makes dark logos white.
+     ============================================= -->
+<hr class="section-divider">
+<section id="education" class="section">
+  <p class="section-label">Education</p>
+  <h2 class="section-title">Academic background</h2>
+
+  <div class="timeline">
+
+    <!-- KU Eichstätt-Ingolstadt -->
+    <div class="edu-card">
+      <div class="edu-logo">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Wappen_Eichst%C3%A4tt.svg/240px-Wappen_Eichst%C3%A4tt.svg.png"
+          alt="KU Eichstätt-Ingolstadt"
+        />
+      </div>
+      <div class="edu-meta">
+        <h3>Katholische Universität Eichstätt-Ingolstadt</h3>
+        <span class="edu-degree">B.Sc. Data Science</span>
+        <span class="edu-date">2022 – 2026 (expected) · Ingolstadt, Germany</span>
+      </div>
+    </div>
+
+    <!-- Tec de Monterrey -->
+    <div class="edu-card">
+      <div class="edu-logo">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Logo_Tecnol%C3%B3gico_de_Monterrey.svg/240px-Logo_Tecnol%C3%B3gico_de_Monterrey.svg.png"
+          alt="Tecnológico de Monterrey"
+        />
+      </div>
+      <div class="edu-meta">
+        <h3>Tecnológico de Monterrey</h3>
+        <span class="edu-degree">B.Sc. Computer Science and Technology</span>
+        <span class="edu-date">2021 – 2022 · Toluca, Mexico</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<!-- =============================================
+     BLOCK 18: PASSIONS HTML
+     Simple cards with emoji icons.
+     This section makes you human — not just a list of tools.
+     ============================================= -->
+<hr class="section-divider">
+<section id="passions" class="section">
+  <p class="section-label">Beyond the screen</p>
   <h2 class="section-title">Passions</h2>
+
   <div class="passions-grid">
+
     <div class="passion-card">
-      <div class="passion-icon">🏃</div>
+      <span class="passion-icon">🏃</span>
       <h3>Running</h3>
-      <p>Long distances, clear mind. Running helps me think through problems and stay disciplined.</p>
+      <p>Long distances, clear mind. Running teaches discipline and patience — skills that transfer directly to long data projects.</p>
     </div>
+
     <div class="passion-card">
-      <div class="passion-icon">⚽</div>
+      <span class="passion-icon">⚽</span>
       <h3>Sports</h3>
-      <p>Team sports taught me collaboration and strategy — skills that translate directly to data projects.</p>
+      <p>Team sports built my instinct for collaboration and strategy. I believe in playing as a unit, in sport and in code.</p>
     </div>
+
     <div class="passion-card">
-      <div class="passion-icon">📊</div>
-      <h3>Data in sports</h3>
-      <p>The intersection of analytics and athletic performance — applying data science to what I love.</p>
+      <span class="passion-icon">📈</span>
+      <h3>Quantitative finance</h3>
+      <p>Algorithmic trading, time series and market data fascinate me. Where mathematics, code and real-world stakes collide.</p>
     </div>
+
     <div class="passion-card">
-      <div class="passion-icon">🌍</div>
+      <span class="passion-icon">🌍</span>
       <h3>Living abroad</h3>
-      <p>From Toluca, Mexico to Bavaria, Germany — adapting to new environments and cultures.</p>
+      <p>From Toluca, Mexico to Bavaria, Germany. Adapting to new environments, languages and cultures is something I genuinely enjoy.</p>
     </div>
+
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-inner">
+
+
+
+
+<!-- =============================================
+     BLOCK 19: CONTACT HTML
+     Simple centered card.
+     mailto: opens the user's email app automatically.
+     target="_blank" opens links in a new tab.
+     rel="noopener" is a security best practice for _blank links.
+     ============================================= -->
+<hr class="section-divider">
+<section id="contact" class="section">
+  <div class="contact-card">
     <h2>Let's work together</h2>
-    <p>Open to internships, working student positions, and interesting projects.</p>
+    <p>Open to working student positions, internships and interesting data projects.</p>
     <div class="contact-links">
-      <a href="mailto:your@email.com" class="btn-primary">Send email</a>
-      <a href="https://github.com/faustvg" target="_blank" class="btn-ghost">GitHub ↗</a>
-      <a href="https://linkedin.com/in/YOUR-LINKEDIN" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+      <a href="mailto:faustinovazquezgabino@gmail.com" class="btn-primary">Send email</a>
+      <a href="https://github.com/faustvg" target="_blank" rel="noopener" class="btn-ghost">GitHub ↗</a>
+      <a href="https://linkedin.com/in/faustvg" target="_blank" rel="noopener" class="btn-ghost">LinkedIn ↗</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <p>Faustino Vazquez Gabino · Built with HTML & CSS · Hosted on GitHub Pages</p>
+  <p>Faustino Vazquez Gabino · Data Science · Built with HTML &amp; CSS · Hosted on GitHub Pages</p>
 </footer>
 
 </body>

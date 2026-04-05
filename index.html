@@ -3,137 +3,423 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Name — Portfolio</title>
+  <title>Faustino Vazquez — Data Scientist</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', sans-serif; background: #f9f9f7; color: #1a1a1a; }
 
+    :root {
+      --bg: #0a0a0a;
+      --bg2: #111111;
+      --bg3: #1a1a1a;
+      --border: rgba(255,255,255,0.08);
+      --text: #f0f0ee;
+      --muted: #888;
+      --accent: #4f8ef7;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
+
+    /* NAV */
     nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 1rem 2rem; border-bottom: 1px solid #e5e5e2;
-      background: white; position: sticky; top: 0;
+      padding: 1.2rem 3rem;
+      background: rgba(10,10,10,0.7);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
     }
-    nav .logo { font-size: 15px; font-weight: 500; }
-    nav .links { display: flex; gap: 1.5rem; }
-    nav .links a { font-size: 13px; color: #666; text-decoration: none; }
-    nav .links a:hover { color: #1a1a1a; }
+    nav .logo { font-size: 14px; font-weight: 500; letter-spacing: 0.05em; color: var(--text); }
+    nav .links { display: flex; gap: 2rem; align-items: center; }
+    nav .links a {
+      font-size: 13px; color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav .links a:hover { color: var(--text); }
+    nav .phone { font-size: 12px; color: var(--muted); }
 
-    .hero { padding: 4rem 2rem 3rem; max-width: 680px; margin: 0 auto; }
-    .hero .tag {
-      font-size: 12px; color: #1a6cf5; background: #e8f0fe;
-      padding: 4px 10px; border-radius: 20px; display: inline-block; margin-bottom: 1rem;
+    /* HERO */
+    .hero {
+      height: 100vh; min-height: 600px;
+      display: flex; align-items: center;
+      padding: 0 3rem;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0a0a0a 50%, #0d1a2e 100%);
     }
-    .hero h1 { font-size: 32px; font-weight: 500; line-height: 1.2; margin-bottom: 1rem; }
-    .hero p { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 1.5rem; max-width: 500px; }
-    .hero .btns { display: flex; gap: 10px; }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(79,142,247,0.08) 0%, transparent 60%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 600px; }
+    .hero-tag {
+      display: inline-block; font-size: 11px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+      border: 1px solid rgba(79,142,247,0.3);
+      padding: 4px 12px; border-radius: 20px; margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 300; line-height: 1.1; margin-bottom: 0.3rem;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 strong { font-weight: 600; display: block; }
+    .hero .subtitle {
+      font-size: 16px; color: var(--muted); margin: 1.2rem 0 2rem;
+      line-height: 1.6; max-width: 460px;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
     .btn-primary {
-      background: #1a1a1a; color: white; padding: 8px 18px;
-      border-radius: 6px; font-size: 13px; cursor: pointer; border: none;
+      background: var(--accent); color: white; border: none;
+      padding: 10px 22px; border-radius: 6px; font-size: 13px;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: opacity 0.2s;
     }
-    .btn-secondary {
-      background: transparent; color: #1a1a1a; padding: 8px 18px;
-      border-radius: 6px; font-size: 13px; cursor: pointer; border: 1px solid #ccc;
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border); padding: 10px 22px;
+      border-radius: 6px; font-size: 13px; cursor: pointer;
+      text-decoration: none; display: inline-block;
+      transition: border-color 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.3); }
+
+    /* SCROLL HINT */
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px; color: var(--muted); letter-spacing: 0.1em;
+      text-transform: uppercase; display: flex; flex-direction: column;
+      align-items: center; gap: 8px;
+    }
+    .scroll-hint::after {
+      content: '';
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
     }
 
-    section { max-width: 680px; margin: 0 auto; padding: 2.5rem 2rem; }
+    /* SECTIONS */
+    section { max-width: 900px; margin: 0 auto; padding: 5rem 3rem; }
+    .section-label {
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.5rem;
+    }
     .section-title {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
-      text-transform: uppercase; color: #999; margin-bottom: 1.5rem;
+      font-size: 28px; font-weight: 400; margin-bottom: 3rem;
+      color: var(--text);
     }
 
-    .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-    .card {
-      background: white; border: 1px solid #e5e5e2;
-      border-radius: 10px; padding: 1.1rem;
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .about-text p { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+    .about-text p strong { color: var(--text); font-weight: 500; }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stat-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.2rem;
     }
-    .card .lang {
-      font-size: 11px; color: #1a6cf5; background: #e8f0fe;
-      padding: 2px 8px; border-radius: 20px; display: inline-block; margin-bottom: 0.6rem;
-    }
-    .card h3 { font-size: 14px; font-weight: 500; margin-bottom: 0.4rem; }
-    .card p { font-size: 12px; color: #666; line-height: 1.5; }
+    .stat-card .num { font-size: 28px; font-weight: 300; color: var(--text); }
+    .stat-card .label { font-size: 11px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
 
-    .skills-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-    .skill {
-      background: white; border: 1px solid #e5e5e2;
-      border-radius: 6px; padding: 5px 12px; font-size: 13px; color: #444;
+    /* PROJECTS */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .project-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none; color: inherit; display: block;
+    }
+    .project-card:hover { border-color: rgba(79,142,247,0.4); transform: translateY(-2px); }
+    .project-card .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .project-card .lang-tag {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+      padding: 3px 8px; border-radius: 4px;
+    }
+    .lang-python { background: rgba(59,130,246,0.15); color: #60a5fa; }
+    .lang-cpp    { background: rgba(168,85,247,0.15); color: #c084fc; }
+    .lang-r      { background: rgba(34,197,94,0.15);  color: #4ade80; }
+    .lang-sql    { background: rgba(251,146,60,0.15);  color: #fb923c; }
+    .lang-ml     { background: rgba(79,142,247,0.15);  color: #4f8ef7; }
+    .arrow { font-size: 18px; color: var(--muted); transition: color 0.2s; }
+    .project-card:hover .arrow { color: var(--accent); }
+    .project-card h3 { font-size: 15px; font-weight: 500; margin-bottom: 0.5rem; }
+    .project-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* SKILLS */
+    .skills-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .skills-section section { padding: 4rem 3rem; }
+    .skills-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2.5rem; }
+    .skill-group h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 1rem; }
+    .skill-list { display: flex; flex-direction: column; gap: 8px; }
+    .skill-item { font-size: 14px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+    .skill-item::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+
+    /* PASSIONS */
+    .passions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .passion-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem; text-align: center;
+    }
+    .passion-icon { font-size: 28px; margin-bottom: 0.8rem; }
+    .passion-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 0.4rem; }
+    .passion-card p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* CONTACT */
+    .contact-inner {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 3rem; text-align: center;
+    }
+    .contact-inner h2 { font-size: 28px; font-weight: 400; margin-bottom: 0.8rem; }
+    .contact-inner p { font-size: 15px; color: var(--muted); margin-bottom: 2rem; }
+    .contact-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: 2rem;
+      font-size: 12px; color: var(--muted);
+      border-top: 1px solid var(--border);
     }
 
-    .contact-box {
-      background: white; border: 1px solid #e5e5e2;
-      border-radius: 10px; padding: 1.5rem;
-      display: flex; justify-content: space-between; align-items: center;
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.5rem; }
+      .hero { padding: 0 1.5rem; }
+      section { padding: 4rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; }
     }
-    .contact-box p { font-size: 14px; color: #555; }
   </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <span class="logo">Your Name</span>
+  <span class="logo">Faustino Vazquez</span>
   <div class="links">
+    <a href="#about">About</a>
     <a href="#projects">Projects</a>
     <a href="#skills">Skills</a>
+    <a href="#passions">Passions</a>
     <a href="#contact">Contact</a>
   </div>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
-  <span class="tag">Open to opportunities</span>
-  <h1>Data analyst &<br>software developer</h1>
-  <p>I build tools and analyses in Python, C++, R and SQL. Currently studying in Bavaria, Germany.</p>
-  <div class="btns">
-    <button class="btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View projects</button>
-    <button class="btn-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact me</button>
+  <div class="hero-content">
+    <span class="hero-tag">Available for opportunities</span>
+    <h1>Faustino<strong>Vazquez</strong></h1>
+    <p class="subtitle">
+      Data Science student at KU Eichstätt-Ingolstadt.<br>
+      Former intern at <strong style="color:#f0f0ee">Audi AG</strong>.
+      I build machine learning models, data pipelines, and analytical tools.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View projects</a>
+      <a href="https://github.com/faustvg" target="_blank" class="btn-ghost">GitHub ↗</a>
+      <a href="#contact" class="btn-ghost">Contact</a>
+    </div>
   </div>
+  <div class="scroll-hint">scroll</div>
 </div>
 
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">About</p>
+  <h2 class="section-title">Who I am</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm a <strong>Data Science</strong> student from Toluca, Mexico, currently living
+        and studying in Ingolstadt, Bavaria. My degree at
+        <strong>KU Eichstätt-Ingolstadt</strong> covers machine learning, algorithms,
+        statistics, and business analytics.
+      </p>
+      <p>
+        In 2025 I completed a 6-month internship at <strong>Audi AG</strong>, where I
+        applied data science methods in a real industrial environment.
+      </p>
+      <p>
+        I enjoy turning messy data into clear insights — and writing clean,
+        efficient code to do it.
+      </p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="num">150</div>
+        <div class="label">ECTS completed</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">6mo</div>
+        <div class="label">Audi AG internship</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">4+</div>
+        <div class="label">Languages & tools</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">2026</div>
+        <div class="label">Expected graduation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
 <section id="projects">
-  <p class="section-title">Projects</p>
-  <div class="projects">
-    <div class="card">
-      <span class="lang">Python</span>
-      <h3>Your project name</h3>
-      <p>Short description of what it does and why it's interesting.</p>
+  <p class="section-label">Work</p>
+  <h2 class="section-title">Projects</h2>
+  <div class="projects-grid">
+
+    <!-- Replace href values with your real GitHub repo URLs -->
+    <a href="https://github.com/faustvg" target="_blank" class="project-card">
+      <div class="card-top">
+        <span class="lang-tag lang-ml">Machine Learning</span>
+        <span class="arrow">↗</span>
+      </div>
+      <h3>Your ML Project</h3>
+      <p>Replace this with a real project from your GitHub. What did it do? What problem did it solve?</p>
+    </a>
+
+    <a href="https://github.com/faustvg" target="_blank" class="project-card">
+      <div class="card-top">
+        <span class="lang-tag lang-python">Python</span>
+        <span class="arrow">↗</span>
+      </div>
+      <h3>Your Python Project</h3>
+      <p>A data pipeline, analysis tool, or automation script. Describe it in 1-2 sentences.</p>
+    </a>
+
+    <a href="https://github.com/faustvg" target="_blank" class="project-card">
+      <div class="card-top">
+        <span class="lang-tag lang-sql">SQL</span>
+        <span class="arrow">↗</span>
+      </div>
+      <h3>Your SQL Project</h3>
+      <p>Database design, queries, or reporting work. What was the business question you answered?</p>
+    </a>
+
+    <a href="https://github.com/faustvg" target="_blank" class="project-card">
+      <div class="card-top">
+        <span class="lang-tag lang-cpp">C++</span>
+        <span class="arrow">↗</span>
+      </div>
+      <h3>Your C++ Project</h3>
+      <p>Algorithm implementation, system-level code, or university project. What did you build?</p>
+    </a>
+
+    <a href="https://github.com/faustvg" target="_blank" class="project-card">
+      <div class="card-top">
+        <span class="lang-tag lang-r">R</span>
+        <span class="arrow">↗</span>
+      </div>
+      <h3>Your R Project</h3>
+      <p>Statistical model or data visualization. What dataset did you work with?</p>
+    </a>
+
+    <a href="https://github.com/faustvg" target="_blank" class="project-card">
+      <div class="card-top">
+        <span class="lang-tag lang-ml">Data Science</span>
+        <span class="arrow">↗</span>
+      </div>
+      <h3>Digital Project — Audi AG</h3>
+      <p>Business Analytics and Data Science project completed during the Audi AG internship.</p>
+    </a>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<div class="skills-section">
+  <section id="skills">
+    <p class="section-label">Expertise</p>
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-cols">
+      <div class="skill-group">
+        <h4>Languages</h4>
+        <div class="skill-list">
+          <span class="skill-item">Python</span>
+          <span class="skill-item">C++</span>
+          <span class="skill-item">R</span>
+          <span class="skill-item">SQL</span>
+          <span class="skill-item">HTML & CSS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Data & ML</h4>
+        <div class="skill-list">
+          <span class="skill-item">Machine Learning</span>
+          <span class="skill-item">Statistical Modelling</span>
+          <span class="skill-item">Data Analysis</span>
+          <span class="skill-item">Business Analytics</span>
+          <span class="skill-item">Signal Processing</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Tools</h4>
+        <div class="skill-list">
+          <span class="skill-item">Git & GitHub</span>
+          <span class="skill-item">VS Code</span>
+          <span class="skill-item">Simulation & Optimization</span>
+          <span class="skill-item">Software Engineering</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Languages (spoken)</h4>
+        <div class="skill-list">
+          <span class="skill-item">Spanish (native)</span>
+          <span class="skill-item">German</span>
+          <span class="skill-item">English</span>
+        </div>
+      </div>
     </div>
-    <div class="card">
-      <span class="lang">SQL</span>
-      <h3>Your project name</h3>
-      <p>Short description of what it does and why it's interesting.</p>
+  </section>
+</div>
+
+<!-- PASSIONS -->
+<section id="passions">
+  <p class="section-label">Beyond code</p>
+  <h2 class="section-title">Passions</h2>
+  <div class="passions-grid">
+    <div class="passion-card">
+      <div class="passion-icon">🏃</div>
+      <h3>Running</h3>
+      <p>Long distances, clear mind. Running helps me think through problems and stay disciplined.</p>
     </div>
-    <div class="card">
-      <span class="lang">C++</span>
-      <h3>Your project name</h3>
-      <p>Short description of what it does and why it's interesting.</p>
+    <div class="passion-card">
+      <div class="passion-icon">⚽</div>
+      <h3>Sports</h3>
+      <p>Team sports taught me collaboration and strategy — skills that translate directly to data projects.</p>
     </div>
-    <div class="card">
-      <span class="lang">R</span>
-      <h3>Your project name</h3>
-      <p>Short description of what it does and why it's interesting.</p>
+    <div class="passion-card">
+      <div class="passion-icon">📊</div>
+      <h3>Data in sports</h3>
+      <p>The intersection of analytics and athletic performance — applying data science to what I love.</p>
+    </div>
+    <div class="passion-card">
+      <div class="passion-icon">🌍</div>
+      <h3>Living abroad</h3>
+      <p>From Toluca, Mexico to Bavaria, Germany — adapting to new environments and cultures.</p>
     </div>
   </div>
 </section>
 
-<section id="skills">
-  <p class="section-title">Skills</p>
-  <div class="skills-grid">
-    <span class="skill">Python</span>
-    <span class="skill">C++</span>
-    <span class="skill">R</span>
-    <span class="skill">SQL</span>
-    <span class="skill">Data analysis</span>
-    <span class="skill">Git & GitHub</span>
-    <span class="skill">HTML & CSS</span>
-  </div>
-</section>
-
+<!-- CONTACT -->
 <section id="contact">
-  <p class="section-title">Contact</p>
-  <div class="contact-box">
-    <p>Want to work together or just say hi?</p>
-    <a href="mailto:you@email.com"><button class="btn-primary">Send email</button></a>
+  <div class="contact-inner">
+    <h2>Let's work together</h2>
+    <p>Open to internships, working student positions, and interesting projects.</p>
+    <div class="contact-links">
+      <a href="mailto:your@email.com" class="btn-primary">Send email</a>
+      <a href="https://github.com/faustvg" target="_blank" class="btn-ghost">GitHub ↗</a>
+      <a href="https://linkedin.com/in/YOUR-LINKEDIN" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+    </div>
   </div>
 </section>
+
+<footer>
+  <p>Faustino Vazquez Gabino · Built with HTML & CSS · Hosted on GitHub Pages</p>
+</footer>
 
 </body>
 </html>

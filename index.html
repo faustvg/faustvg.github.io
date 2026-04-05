@@ -3,15 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Faustino Vazquez — Data Scientist</title>
+  <title>Faustino Vazquez Gabino— Data Scientist</title>
 </head>
 
 
 <style>
   /* =============================================
      BLOCK 2: DESIGN SYSTEM
-     These are like variables in Python.
-     Change one value here → updates the whole site.
      ============================================= */
   :root {
     --bg:       #0a0a0a;   /* main background (near black) */
@@ -27,9 +25,6 @@
 
   /* =============================================
      BLOCK 3: RESET & BASE
-     Browsers have their own default styles (margins,
-     font sizes, etc.) that differ between Chrome/Firefox.
-     This reset removes them so you start from zero.
      ============================================= */
   *, *::before, *::after {
     margin: 0;
@@ -49,25 +44,22 @@
   }
 
   a {
-    text-decoration: none; /* removes underline from all links by default */
-    color: inherit;        /* links take the color of their parent element */
+    text-decoration: none;
+    color: inherit;        
   }
 
 
   /* =============================================
      BLOCK 4: UTILITY CLASSES
-     Small reusable styles you apply directly in HTML.
-     Like helper functions in Python.
      ============================================= */
 
-  /* Section wrapper — centers content and limits width */
   .section {
     max-width: 920px;
-    margin: 0 auto;        /* auto left+right margin = centered */
-    padding: 5rem 2rem;    /* 5rem top/bottom, 2rem left/right */
+    margin: 0 auto;        
+    padding: 5rem 2rem;    
   }
 
-  /* The small uppercase label above section titles */
+  /*  small uppercase label above section titles */
   .section-label {
     font-size: 11px;
     font-weight: 500;
@@ -77,9 +69,9 @@
     margin-bottom: 0.4rem;
   }
 
-  /* The large section heading */
+  /*  large section heading */
   .section-title {
-    font-size: clamp(22px, 4vw, 32px); /* scales with screen size */
+    font-size: clamp(22px, 4vw, 32px); 
     font-weight: 400;
     color: var(--text);
     margin-bottom: 3rem;
@@ -504,7 +496,7 @@
      href="#projects" scrolls to the element with id="projects"
      ============================================= -->
 <nav>
-  <span class="logo">Faustino Vazquez</span>
+  <span class="logo">Faustino Vazquez Gabino</span>
   <ul class="nav-links">
     <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
@@ -525,13 +517,13 @@
      ============================================= -->
 <header class="hero">
   <div class="hero-content">
-    <span class="hero-tag">Open to opportunities · Ingolstadt, Germany</span>
+    <span class="hero-tag">Ingolstadt, Germany</span>
 
-    <h1>Faustino<strong>Vazquez</strong></h1>
+    <h1>Faustino<strong>Vazquez Gabino</strong></h1>
 
     <p class="hero-sub">
-      Data Science student at <strong>KU Eichstätt-Ingolstadt</strong>.<br>
-      Former intern &amp; thesis student at <strong>Audi AG</strong>.<br>
+      Data Science Student at <strong>KU Eichstätt-Ingolstadt</strong>.<br>
+      ntern &amp; thesis student at <strong>Audi AG</strong>.<br>
       I build ML models, ETL pipelines, and data-driven tools.
     </p>
 
@@ -793,37 +785,38 @@
 
   <div class="timeline">
 
-    <!-- KU Eichstätt-Ingolstadt -->
-    <div class="edu-card">
-      <div class="edu-logo">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Wappen_Eichst%C3%A4tt.svg/240px-Wappen_Eichst%C3%A4tt.svg.png"
-          alt="KU Eichstätt-Ingolstadt"
-        />
-      </div>
-      <div class="edu-meta">
-        <h3>Katholische Universität Eichstätt-Ingolstadt</h3>
-        <span class="edu-degree">B.Sc. Data Science</span>
-        <span class="edu-date">2022 – 2026 (expected) · Ingolstadt, Germany</span>
-      </div>
-    </div>
-
-    <!-- Tec de Monterrey -->
-    <div class="edu-card">
-      <div class="edu-logo">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Logo_Tecnol%C3%B3gico_de_Monterrey.svg/240px-Logo_Tecnol%C3%B3gico_de_Monterrey.svg.png"
-          alt="Tecnológico de Monterrey"
-        />
-      </div>
-      <div class="edu-meta">
-        <h3>Tecnológico de Monterrey</h3>
-        <span class="edu-degree">B.Sc. Computer Science and Technology</span>
-        <span class="edu-date">2021 – 2022 · Toluca, Mexico</span>
-      </div>
-    </div>
-
+<!-- KU Eichstätt-Ingolstadt -->
+<div class="edu-card">
+  <div class="edu-logo">
+    <!-- Direct Wikimedia file CDN URL — this always works -->
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/KU_Eichst%C3%A4tt-Ingolstadt_Logo.svg/320px-KU_Eichst%C3%A4tt-Ingolstadt_Logo.svg.png"
+      alt="KU Eichstätt-Ingolstadt"
+      style="width:36px; height:auto; filter: brightness(0) invert(1);"
+    />
   </div>
+  <div class="edu-meta">
+    <h3>Katholische Universität Eichstätt-Ingolstadt</h3>
+    <span class="edu-degree">B.Sc. Data Science</span>
+    <span class="edu-date">2022 – 2026 (expected) · Ingolstadt, Germany</span>
+  </div>
+</div>
+
+<!-- Tecnológico de Monterrey -->
+<div class="edu-card">
+  <div class="edu-logo">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Logo_Tecnol%C3%B3gico_de_Monterrey.svg/320px-Logo_Tecnol%C3%B3gico_de_Monterrey.svg.png"
+      alt="Tecnológico de Monterrey"
+      style="width:36px; height:auto; filter: brightness(0) invert(1);"
+    />
+  </div>
+  <div class="edu-meta">
+    <h3>Tecnológico de Monterrey</h3>
+    <span class="edu-degree">B.Sc. Computer Science and Technology</span>
+    <span class="edu-date">2021 – 2022 · Toluca, Mexico</span>
+  </div>
+</div>
 </section>
 
 

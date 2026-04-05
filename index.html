@@ -1,10 +1,139 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>My Portfolio</title>
-  </head>
-  <body>
-    <h1>Hello, I'm [Your Name]</h1>
-    <p>This site is under construction.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name — Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f9f9f7; color: #1a1a1a; }
+
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem; border-bottom: 1px solid #e5e5e2;
+      background: white; position: sticky; top: 0;
+    }
+    nav .logo { font-size: 15px; font-weight: 500; }
+    nav .links { display: flex; gap: 1.5rem; }
+    nav .links a { font-size: 13px; color: #666; text-decoration: none; }
+    nav .links a:hover { color: #1a1a1a; }
+
+    .hero { padding: 4rem 2rem 3rem; max-width: 680px; margin: 0 auto; }
+    .hero .tag {
+      font-size: 12px; color: #1a6cf5; background: #e8f0fe;
+      padding: 4px 10px; border-radius: 20px; display: inline-block; margin-bottom: 1rem;
+    }
+    .hero h1 { font-size: 32px; font-weight: 500; line-height: 1.2; margin-bottom: 1rem; }
+    .hero p { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 1.5rem; max-width: 500px; }
+    .hero .btns { display: flex; gap: 10px; }
+    .btn-primary {
+      background: #1a1a1a; color: white; padding: 8px 18px;
+      border-radius: 6px; font-size: 13px; cursor: pointer; border: none;
+    }
+    .btn-secondary {
+      background: transparent; color: #1a1a1a; padding: 8px 18px;
+      border-radius: 6px; font-size: 13px; cursor: pointer; border: 1px solid #ccc;
+    }
+
+    section { max-width: 680px; margin: 0 auto; padding: 2.5rem 2rem; }
+    .section-title {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #999; margin-bottom: 1.5rem;
+    }
+
+    .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .card {
+      background: white; border: 1px solid #e5e5e2;
+      border-radius: 10px; padding: 1.1rem;
+    }
+    .card .lang {
+      font-size: 11px; color: #1a6cf5; background: #e8f0fe;
+      padding: 2px 8px; border-radius: 20px; display: inline-block; margin-bottom: 0.6rem;
+    }
+    .card h3 { font-size: 14px; font-weight: 500; margin-bottom: 0.4rem; }
+    .card p { font-size: 12px; color: #666; line-height: 1.5; }
+
+    .skills-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill {
+      background: white; border: 1px solid #e5e5e2;
+      border-radius: 6px; padding: 5px 12px; font-size: 13px; color: #444;
+    }
+
+    .contact-box {
+      background: white; border: 1px solid #e5e5e2;
+      border-radius: 10px; padding: 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .contact-box p { font-size: 14px; color: #555; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Your Name</span>
+  <div class="links">
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <span class="tag">Open to opportunities</span>
+  <h1>Data analyst &<br>software developer</h1>
+  <p>I build tools and analyses in Python, C++, R and SQL. Currently studying in Bavaria, Germany.</p>
+  <div class="btns">
+    <button class="btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View projects</button>
+    <button class="btn-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact me</button>
+  </div>
+</div>
+
+<section id="projects">
+  <p class="section-title">Projects</p>
+  <div class="projects">
+    <div class="card">
+      <span class="lang">Python</span>
+      <h3>Your project name</h3>
+      <p>Short description of what it does and why it's interesting.</p>
+    </div>
+    <div class="card">
+      <span class="lang">SQL</span>
+      <h3>Your project name</h3>
+      <p>Short description of what it does and why it's interesting.</p>
+    </div>
+    <div class="card">
+      <span class="lang">C++</span>
+      <h3>Your project name</h3>
+      <p>Short description of what it does and why it's interesting.</p>
+    </div>
+    <div class="card">
+      <span class="lang">R</span>
+      <h3>Your project name</h3>
+      <p>Short description of what it does and why it's interesting.</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <p class="section-title">Skills</p>
+  <div class="skills-grid">
+    <span class="skill">Python</span>
+    <span class="skill">C++</span>
+    <span class="skill">R</span>
+    <span class="skill">SQL</span>
+    <span class="skill">Data analysis</span>
+    <span class="skill">Git & GitHub</span>
+    <span class="skill">HTML & CSS</span>
+  </div>
+</section>
+
+<section id="contact">
+  <p class="section-title">Contact</p>
+  <div class="contact-box">
+    <p>Want to work together or just say hi?</p>
+    <a href="mailto:you@email.com"><button class="btn-primary">Send email</button></a>
+  </div>
+</section>
+
+</body>
 </html>

@@ -270,7 +270,7 @@
     flex-shrink: 0; /* never squish the logo */
     overflow: hidden;
   }
-  .exp-logo img  { width: 40px; height: 40px; object-fit: contain; filter: brightness(0) invert(1); }
+  .exp-logo img  { width: 40px; height: 44px; object-fit: contain; filter: brightness(0) invert(1); }
   .exp-logo svg  { width: 36px; height: auto; }
 
   .exp-meta { flex: 1; }
@@ -420,7 +420,7 @@
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; overflow: hidden;
   }
-  .edu-logo img { width: 28px; height: 28px; object-fit: contain; filter: brightness(0) invert(1); }
+  .edu-logo img { width: 40px; height: 40px; object-fit: contain; filter: brightness(0) invert(1); }
 
   .edu-meta h3   { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
   .edu-meta .edu-degree { font-size: 13px; color: var(--muted); }
@@ -467,6 +467,12 @@
     border-top: 1px solid var(--border);
   }
 
+  .flag-icon {
+      width: 20px; /* Adjust this number to make the flag bigger or smaller */
+      height: auto;
+      vertical-align: middle;
+      margin-right: 5px; /* Adds a little breathing room between the flag and the text */
+  }
   /* =============================================
      BLOCK 11: RESPONSIVE (
      ============================================= */
@@ -846,7 +852,7 @@
   <div class="edu-meta">
     <h3>Katholische Universität Eichstätt-Ingolstadt</h3>
     <span class="edu-degree">B.Sc. Data Science</span>
-    <span class="edu-date">2022 – 2026 (expected) · Ingolstadt, Germany</span>
+    <span class="edu-date">2022 – 2026  · Ingolstadt, Germany</span>
   </div>
 </div>
 
@@ -929,13 +935,13 @@
 
     <!-- CV download row — separate from main buttons -->
     <div class="cv-download">
-    <span class="cv-label">Download CV</span>
+    <span class="cv-label">View CV</span>
     <div class="cv-btns">
-        <a href="faustino_vazquez_cv.pdf" download class="cv-btn">
-        🇬🇧 English
+        <a href="faustino_vazquez_cv.pdf" target="_blank" rel="noopener" class="cv-btn">
+             <img src="assets/flag-uk.svg" alt="UK Flag" class="flag-icon"> English
         </a>
-        <a href="lebenslauf_deutsch_version.pdf" download class="cv-btn">
-        🇩🇪 Deutsch
+        <a href="lebenslauf_deutsch_version.pdf" target="_blank" rel="noopener" class="cv-btn">
+             <img src="assets/flag-de.svg" alt="DE Flag" class="flag-icon"> Deutsch
         </a>
     </div>
     </div>

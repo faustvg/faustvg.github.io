@@ -153,6 +153,29 @@
 
   nav .nav-links a:hover { color: var(--text); }
 
+  .nav-cv {
+    display: flex;
+    gap: 6px;
+    margin-left: 1.5rem;
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--border);
+  }
+  .nav-cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 4px 11px;
+    border-radius: 20px;
+    transition: border-color 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .nav-cv-btn:hover { border-color: rgba(255,255,255,0.25); color: var(--text); }
+  .nav-cv-btn img { width: 15px; height: auto; vertical-align: middle; }
+
 
   /* =============================================
      BLOCK 6: HERO SECTION
@@ -333,41 +356,100 @@
     padding: 1.4rem;
     display: flex; flex-direction: column; gap: 0.6rem;
     transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    cursor: pointer;
   }
   .proj-card:hover {
     border-color: rgba(79, 142, 247, 0.4);
-    transform: translateY(-2px); /* tiny lift on hover */
+    transform: translateY(-2px);
   }
 
-  .proj-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  /* Language badge — different color per language */
+  /* Language badge — full-width row at top of card */
   .lang-badge {
-    font-size: 10px; font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.07em;
-    padding: 3px 9px; border-radius: 4px;
+    padding: 7px 12px; border-radius: 6px;
+    width: 100%;
   }
+  .lang-badge::after {
+    content: '↗';
+    font-size: 14px;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+  .proj-card:hover .lang-badge::after { opacity: 1; }
+
   .lang-py  { background: rgba(59,130,246,0.15); color: #60a5fa; }
   .lang-sql { background: rgba(251,146,60,0.15);  color: #fb923c; }
   .lang-cpp { background: rgba(168,85,247,0.15);  color: #c084fc; }
   .lang-r   { background: rgba(34,197,94,0.15);   color: #4ade80; }
   .lang-ml  { background: rgba(79,142,247,0.15);  color: #4f8ef7; }
 
-  .proj-arrow { font-size: 16px; color: var(--muted); transition: color 0.2s; }
-  .proj-card:hover .proj-arrow { color: var(--accent); }
-
   .proj-card h3 { font-size: 14px; font-weight: 500; }
   .proj-card p  { font-size: 12px; color: var(--muted); line-height: 1.6; flex: 1; }
 
-  /* Optional: small stat row at the bottom of a card */
   .proj-stat {
     font-size: 11px; color: var(--accent);
-    margin-top: auto; /* push to bottom of card */
+    margin-top: auto;
   }
+
+  /* Preview button for notebook cards */
+  .proj-preview-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 0.4rem;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(79,142,247,0.08);
+    border: 1px solid rgba(79,142,247,0.25);
+    padding: 5px 12px;
+    border-radius: 20px;
+    align-self: flex-start;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .proj-preview-btn:hover { background: rgba(79,142,247,0.18); border-color: rgba(79,142,247,0.5); }
+
+  /* Notebook modal */
+  .nb-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 500;
+    padding: 1.5rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .nb-modal.open { display: flex; }
+  .nb-modal-inner {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    height: 88vh;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+  .nb-close {
+    position: absolute;
+    top: 0.8rem; right: 0.8rem;
+    background: rgba(0,0,0,0.12);
+    border: none;
+    border-radius: 50%;
+    width: 32px; height: 32px;
+    font-size: 15px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .nb-close:hover { background: rgba(0,0,0,0.22); }
+  .nb-frame { width: 100%; height: 100%; border: none; }
 
 
 
@@ -396,10 +478,12 @@
     display: flex; align-items: center; gap: 8px;
   }
   .skill-item::before {
-    content: ''; width: 3px; height: 3px;
+    content: ''; width: 4px; height: 4px;
     border-radius: 50%; background: var(--border);
     flex-shrink: 0;
   }
+  .skill-item:has(img)::before { display: none; }
+  .skill-item img { width: 16px; height: 16px; object-fit: contain; flex-shrink: 0; }
 
   /* Education — reuses .exp-card styles, just different content */
   .edu-card {
@@ -479,6 +563,7 @@
   @media (max-width: 640px) {
     nav { padding: 1rem 1.5rem; }
     nav .nav-links { gap: 1.2rem; }
+    .nav-cv { display: none; }
     .hero { padding: 5rem 1.5rem 3rem; }
     .section { padding: 3.5rem 1.5rem; }
     .exp-date { display: none; } /* hide dates on small screens, too cramped */
@@ -507,6 +592,14 @@
     <li><a href="#passions">Passions</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <div class="nav-cv">
+    <a href="cv/faustino_vazquez_cv.pdf" target="_blank" rel="noopener" class="nav-cv-btn">
+      <img src="assets/flag-uk.svg" alt=""> CV EN
+    </a>
+    <a href="cv/lebenslauf_deutsch_version.pdf" target="_blank" rel="noopener" class="nav-cv-btn">
+      <img src="assets/flag-de.svg" alt=""> CV DE
+    </a>
+  </div>
 </nav>
 
 
@@ -521,11 +614,11 @@
   <div class="hero-content">
     <span class="hero-tag">Ingolstadt, Germany</span>
 
-    <h1>Faustino<strong>Vazquez Gabino</strong></h1>
+    <h1><strong>Faustino</strong>Vazquez Gabino</h1>
 
     <p class="hero-sub">
-      Data Science Student at <strong>KU Eichstätt-Ingolstadt</strong>.<br>
-      Data Analyst Working student at <strong>Siemens Mobility </strong>.<br>
+      <strong>Data Science Student at KU Eichstätt-Ingolstadt</strong>.<br>
+      <strong>Data Analyst Working student at  Siemens Mobility </strong>.<br>
       Hands-on experience in data engineering, machine learning, and BI at Audi AG and
       Siemens Mobility. Proven ability to design scalable data architectures and automate analytical workflows in industrial
       environments. Strong interest in large-scale data systems and the digital transformation of operational processes.
@@ -705,10 +798,7 @@
 
     <!-- PROJECT 1 -->
     <a href="https://github.com/faustvg/YOUR-REPO-NAME" target="_blank" class="proj-card">
-      <div class="proj-top">
-        <span class="lang-badge lang-py">Python</span>
-        <span class="proj-arrow">↗</span>
-      </div>
+      <span class="lang-badge lang-py">Python</span>
       <h3>HackaTUM Trading Algorithm</h3>
       <p>Algorithmic trading strategies for the TUM hackathon. Arbitrage for dual-listed assets and sentiment-based signals from financial news. 5th place finish.</p>
       <span class="proj-stat">🏆 5th place · HackaTUM 2024 &amp; 2025</span>
@@ -716,30 +806,22 @@
 
     <!-- PROJECT 2 -->
     <a href="https://github.com/faustvg/YOUR-REPO-NAME" target="_blank" class="proj-card">
-      <div class="proj-top">
-        <span class="lang-badge lang-py">Python</span>
-        <span class="proj-arrow">↗</span>
-      </div>
+      <span class="lang-badge lang-py">Python</span>
       <h3>Cryptocurrency Trading Bot</h3>
       <p>Algorithmic trading strategies using the Binance API for market data and automated execution. Includes price analysis, signal generation and backtesting pipelines.</p>
     </a>
 
-    <!-- PROJECT 3 -->
-    <a href="https://github.com/faustvg/YOUR-REPO-NAME" target="_blank" class="proj-card">
-      <div class="proj-top">
-        <span class="lang-badge lang-ml">Machine Learning</span>
-        <span class="proj-arrow">↗</span>
-      </div>
+    <!-- PROJECT 3 — notebook preview -->
+    <div class="proj-card" onclick="openNotebook()">
+      <span class="lang-badge lang-ml">Machine Learning</span>
       <h3>Hybrid Time Series Forecasting</h3>
       <p>Framework combining Holt-Winters, ARIMA, SARIMAX and N-BEATS neural models. Evaluated on the M4 Competition dataset (100k time series). Best sMAPE ~0.16.</p>
-    </a>
+      <span class="proj-preview-btn">▶ Preview notebook</span>
+    </div>
 
     <!-- PROJECT 4 -->
     <a href="https://github.com/faustvg/YOUR-REPO-NAME" target="_blank" class="proj-card">
-      <div class="proj-top">
-        <span class="lang-badge lang-ml">Python · ML</span>
-        <span class="proj-arrow">↗</span>
-      </div>
+      <span class="lang-badge lang-ml">Python · ML</span>
       <h3>Stellar Classification</h3>
       <p>Multi-class classification of stars, galaxies and quasars. Compared Logistic Regression, Random Forest, Gradient Boosting, SVM and KNN. 89% accuracy, ROC-AUC 0.96.</p>
       <span class="proj-stat">89% accuracy · ROC-AUC 0.96</span>
@@ -747,20 +829,14 @@
 
     <!-- PROJECT 5 -->
     <a href="https://github.com/faustvg/YOUR-REPO-NAME" target="_blank" class="proj-card">
-      <div class="proj-top">
-        <span class="lang-badge lang-sql">SQL</span>
-        <span class="proj-arrow">↗</span>
-      </div>
+      <span class="lang-badge lang-sql">SQL</span>
       <h3>Supply Chain Data Pipeline</h3>
       <p>Automated reporting pipeline built during the Audi internship. Replaced manual Excel processes with SQL + KNIME workflows feeding Power BI dashboards.</p>
     </a>
 
     <!-- PROJECT 6 -->
     <a href="https://github.com/faustvg/YOUR-REPO-NAME" target="_blank" class="proj-card">
-      <div class="proj-top">
-        <span class="lang-badge lang-r">R</span>
-        <span class="proj-arrow">↗</span>
-      </div>
+      <span class="lang-badge lang-r">R</span>
       <h3>Statistical Learning Project</h3>
       <p>University coursework in statistical modelling and learning theory. Feature engineering, model comparison and cross-validation in R.</p>
     </a>
@@ -784,12 +860,10 @@
     <div class="skill-group">
       <h4>Languages</h4>
       <div class="skill-list">
-        <img src="assets/python.svg" alt="Python" class="flag-icon"> Python
-        <span class="skill-item">Python</span>
-
-        <span class="skill-item">SQL</span>
-        <span class="skill-item">R</span>
-        <span class="skill-item">C++</span>
+        <span class="skill-item"><img src="assets/python.svg" alt="Python"> Python</span>
+        <span class="skill-item"><img src="assets/sql.svg" alt="SQL"> SQL</span>
+        <span class="skill-item"><img src="assets/r_script.svg" alt="R"> R</span>
+        <span class="skill-item"><img src="assets/c_plus_plus.svg" alt="C++"> C++</span>
       </div>
     </div>
 
@@ -895,12 +969,6 @@
     </div>
 
     <div class="passion-card">
-      <span class="passion-icon">⚽</span>
-      <h3>Sports</h3>
-      <p>Team sports built my instinct for collaboration and strategy. I believe in playing as a unit, in sport and in code.</p>
-    </div>
-
-    <div class="passion-card">
       <span class="passion-icon">📈</span>
       <h3>Quantitative finance</h3>
       <p>Algorithmic trading, time series and market data fascinate me. Where mathematics, code and real-world stakes collide.</p>
@@ -937,24 +1005,38 @@
     <a href="https://linkedin.com/in/faustvg" target="_blank" rel="noopener" class="btn-ghost">LinkedIn ↗</a>
     </div>
 
-    <!-- CV download row — separate from main buttons -->
-    <div class="cv-download">
-    <span class="cv-label">View CV</span>
-    <div class="cv-btns">
-        <a href="cv/faustino_vazquez_cv.pdf" target="_blank" rel="noopener" class="cv-btn">
-             <img src="assets/flag-uk.svg" alt="UK Flag" class="flag-icon"> English
-        </a>
-        <a href="cv/lebenslauf_deutsch_version.pdf" target="_blank" rel="noopener" class="cv-btn">
-             <img src="assets/flag-de.svg" alt="DE Flag" class="flag-icon"> Deutsch
-        </a>
-    </div>
-    </div>
+
   </div>
 </section>
 
 <footer>
   <p>Faustino Vazquez Gabino · Data Science · Built with HTML &amp; CSS · Hosted on GitHub Pages</p>
 </footer>
+
+<!-- Notebook preview modal -->
+<div id="nb-modal" class="nb-modal" onclick="if(event.target===this)closeNotebook()">
+  <div class="nb-modal-inner">
+    <button class="nb-close" onclick="closeNotebook()">✕</button>
+    <!-- Update the src URL below to point to your actual notebook file on nbviewer -->
+    <iframe id="nb-frame" class="nb-frame" src="" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script>
+  const NOTEBOOK_URL = 'https://nbviewer.org/github/faustvg/Forecast-Hybrid-Model/blob/main/Hybrid_Model_Combination.ipynb';
+
+  function openNotebook() {
+    document.getElementById('nb-frame').src = NOTEBOOK_URL;
+    document.getElementById('nb-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeNotebook() {
+    document.getElementById('nb-modal').classList.remove('open');
+    document.getElementById('nb-frame').src = '';
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNotebook(); });
+</script>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Faustino Vazquez Gabino— Data Scientist</title>
-  <link rel="icon" type="image/jpg" href="assets/logo.jpg">
+  <link rel="icon" type="image/png" href="assets/logo.png">
 </head>
 
 
@@ -157,9 +157,9 @@
   .nav-cv {
     display: flex;
     gap: 6px;
-    margin-left: 1.5rem;
-    padding-left: 1.5rem;
-    border-left: 1px solid var(--border);
+    margin-right: 1.5rem;
+    padding-right: 1.5rem;
+    border-right: 1px solid var(--border);
   }
   .nav-cv-btn {
     display: inline-flex;
@@ -176,6 +176,22 @@
   }
   .nav-cv-btn:hover { border-color: rgba(255,255,255,0.25); color: var(--text); }
   .nav-cv-btn img { width: 15px; height: auto; vertical-align: middle; }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 11px;
+    line-height: 1;
+    transition: border-color 0.2s;
+  }
+  .hamburger:hover { border-color: rgba(255,255,255,0.25); }
+
+  .nav-cv-mobile-item { display: none; }
 
 
   /* =============================================
@@ -509,6 +525,12 @@
   .nb-ctrl-val   { font-size: 12px; font-weight: 600; color: var(--accent); min-width: 28px; }
   .nb-slider     { width: 110px; accent-color: var(--accent); cursor: pointer; }
   .nb-ctrl-hint  { font-size: 11px; color: var(--muted); margin-left: auto; font-style: italic; }
+  .nb-select {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text);
+    font-size: 12px; padding: 3px 6px; cursor: pointer; min-width: 58px;
+  }
+  .nb-select:focus { outline: 1px solid var(--accent); }
 
   #nb-precomputed { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
 
@@ -651,12 +673,46 @@
      BLOCK 11: RESPONSIVE (
      ============================================= */
   @media (max-width: 640px) {
-    nav { padding: 1rem 1.5rem; }
-    nav .nav-links { gap: 1.2rem; }
+    nav {
+      padding: 1rem 1.5rem;
+      position: relative;
+    }
     .nav-cv { display: none; }
+    .hamburger { display: block; }
+
+    nav .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: rgba(10,10,10,0.97);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem 0.75rem;
+    }
+    nav.open .nav-links { display: flex; }
+
+    nav .nav-links li {
+      border-bottom: 1px solid var(--border);
+    }
+    nav .nav-links a {
+      display: block;
+      padding: 0.8rem 0;
+      font-size: 14px;
+    }
+
+    .nav-cv-mobile-item {
+      display: flex;
+      gap: 8px;
+      padding: 0.8rem 0;
+      border-bottom: none !important;
+    }
+
     .hero { padding: 5rem 1.5rem 3rem; }
     .section { padding: 3.5rem 1.5rem; }
-    .exp-date { display: none; } /* hide dates on small screens, too cramped */
+    .exp-date { display: none; }
   }
 
 </style>
@@ -673,15 +729,6 @@
      href="#projects" scrolls to the element with id="projects"
      ============================================= -->
 <nav>
-  <span class="logo">Faustino Vazquez Gabino</span>
-  <ul class="nav-links">
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#passions">Passions</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
   <div class="nav-cv">
     <a href="cv/faustino_vazquez_cv.pdf" target="_blank" rel="noopener" class="nav-cv-btn">
       <img src="assets/flag-uk.svg" alt=""> CV EN
@@ -690,6 +737,24 @@
       <img src="assets/flag-de.svg" alt=""> CV DE
     </a>
   </div>
+  <button class="hamburger" onclick="toggleNav()" aria-label="Menu">☰</button>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#passions">Passions</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li class="nav-cv-mobile-item">
+      <a href="cv/faustino_vazquez_cv.pdf" target="_blank" rel="noopener" class="nav-cv-btn">
+        <img src="assets/flag-uk.svg" alt=""> CV EN
+      </a>
+      <a href="cv/lebenslauf_deutsch_version.pdf" target="_blank" rel="noopener" class="nav-cv-btn">
+        <img src="assets/flag-de.svg" alt=""> CV DE
+      </a>
+    </li>
+  </ul>
+  <span class="logo">Faustino Vazquez Gabino</span>
 </nav>
 
 
@@ -1117,8 +1182,10 @@
     <div class="nb-controls">
       <div class="nb-ctrl-group">
         <span class="nb-ctrl-label">Series n =</span>
-        <input type="range" class="nb-slider" id="nb-slider-n" min="1" max="414" value="25" oninput="updateNbParams()">
-        <span class="nb-ctrl-val" id="nb-val-n">25</span>
+        <select class="nb-select" id="nb-select-n" onchange="updateNbParams()">
+          <option value="25">25</option>
+        </select>
+        <span class="nb-ctrl-label" id="nb-n-total" style="color:var(--border)">of 414</span>
       </div>
       <div class="nb-ctrl-group">
         <span class="nb-ctrl-label">Horizon h =</span>
@@ -1197,68 +1264,102 @@ h = 48  # forecast horizon (steps ahead)</pre>
 </div>
 
 <script src="assets/notebook_data.js"></script>
+<script src="assets/notebook_data_multi.js"></script>
 <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
 <script>
-  let nbLoaded = false;
+  let currentN = null;
+
+  /* Return data object for series n, or null if not available. */
+  function getNbData(n) {
+    if (typeof NB_MULTI !== 'undefined' && NB_MULTI.series[String(n)])
+      return NB_MULTI.series[String(n)];
+    if (n === 25 && typeof NB !== 'undefined') return NB;
+    return null;
+  }
+
+  /* Populate the n dropdown from NB_MULTI (if loaded) or fall back to [25]. */
+  function initNbDropdown() {
+    const sel = document.getElementById('nb-select-n');
+    const available = (typeof NB_MULTI !== 'undefined') ? NB_MULTI.available : [25];
+    const prev = parseInt(sel.value) || 25;
+    sel.innerHTML = '';
+    available.forEach(function(n) {
+      const opt = document.createElement('option');
+      opt.value = n; opt.textContent = n;
+      if (n === (available.includes(prev) ? prev : 25)) opt.selected = true;
+      sel.appendChild(opt);
+    });
+    document.getElementById('nb-n-total').textContent =
+      'of 414 — ' + available.length + ' pre-computed';
+  }
 
   function openNotebook() {
     document.getElementById('nb-modal').classList.add('open');
     document.body.style.overflow = 'hidden';
-    if (!nbLoaded) { loadNbContent(); nbLoaded = true; }
+    initNbDropdown();
+    updateNbParams();
   }
   function closeNotebook() {
     document.getElementById('nb-modal').classList.remove('open');
     document.body.style.overflow = '';
   }
   function showNbTab(name, el) {
-    document.querySelectorAll('.nb-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.nb-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nb-tab').forEach(function(t) { t.classList.remove('active'); });
+    document.querySelectorAll('.nb-panel').forEach(function(p) { p.classList.remove('active'); });
     el.classList.add('active');
     document.getElementById('nb-panel-' + name).classList.add('active');
     if (name === 'all' || name === 'best') window.dispatchEvent(new Event('resize'));
   }
+  function resetNbTabs() {
+    document.querySelectorAll('.nb-tab').forEach(function(t, i)   { t.classList.toggle('active', i === 0); });
+    document.querySelectorAll('.nb-panel').forEach(function(p, i) { p.classList.toggle('active', i === 0); });
+  }
   function updateNbParams() {
-    const n = parseInt(document.getElementById('nb-slider-n').value);
+    const n = parseInt(document.getElementById('nb-select-n').value);
     const h = parseInt(document.getElementById('nb-slider-h').value);
-    document.getElementById('nb-val-n').textContent = n;
     document.getElementById('nb-val-h').textContent = h;
-    document.getElementById('nb-title').textContent = 'Hybrid Time Series Forecasting — n=' + n + ', h=' + h;
+    document.getElementById('nb-title').textContent =
+      'Hybrid Time Series Forecasting — n=' + n + ', h=' + h;
 
-    const isPrecomputed = (n === 25 && h === 48);
+    const data = getNbData(n);
+    const isPrecomputed = data !== null && h === 48;
+
     document.getElementById('nb-precomputed').style.display = isPrecomputed ? '' : 'none';
     document.getElementById('nb-runprompt').style.display   = isPrecomputed ? 'none' : 'flex';
     document.getElementById('nb-ctrl-hint').textContent     = isPrecomputed
-      ? 'Showing pre-computed results'
-      : 'Run in Colab for this combination';
+      ? 'Pre-computed results'
+      : (h !== 48 ? 'Only h=48 is pre-computed' : 'Run in Colab for this series');
 
     if (!isPrecomputed) {
       document.getElementById('nb-code-snippet').textContent =
         'n = ' + n + '  # time series index (1–414)\n' +
         'h = ' + h + '  # forecast horizon (steps ahead)';
     }
-
-    if (isPrecomputed && !nbLoaded) { loadNbContent(); nbLoaded = true; }
-    if (isPrecomputed && nbLoaded)  { window.dispatchEvent(new Event('resize')); }
+    if (isPrecomputed && n !== currentN) {
+      loadNbContent(n, data);
+      resetNbTabs();
+      currentN = n;
+    }
   }
   function copyNbCode() {
-    const code = document.getElementById('nb-code-snippet').textContent;
-    navigator.clipboard.writeText(code).then(() => {
-      const btn = document.querySelector('.nb-copy-btn');
-      const orig = btn.textContent;
+    var code = document.getElementById('nb-code-snippet').textContent;
+    navigator.clipboard.writeText(code).then(function() {
+      var btn = document.querySelector('.nb-copy-btn');
+      var orig = btn.textContent;
       btn.textContent = 'Copied!';
-      setTimeout(() => { btn.textContent = orig; }, 1500);
+      setTimeout(function() { btn.textContent = orig; }, 1500);
     });
   }
-  function loadNbContent() {
-    document.getElementById('nb-img-original').src   = NB.png_original;
-    document.getElementById('nb-img-heuristic').src  = NB.png_heuristic;
-    document.getElementById('nb-img-heuristic2').src = NB.png_heuristic2;
-    document.getElementById('nb-img-nn').src         = NB.png_nn;
-    document.getElementById('nb-img-nn2').src        = NB.png_nn2;
-    document.getElementById('nb-table-all').textContent   = NB.table_all;
-    document.getElementById('nb-table-best3').textContent = NB.table_best3;
+  function loadNbContent(n, d) {
+    document.getElementById('nb-img-original').src   = d.png_original;
+    document.getElementById('nb-img-heuristic').src  = d.png_heuristic;
+    document.getElementById('nb-img-heuristic2').src = d.png_heuristic2;
+    document.getElementById('nb-img-nn').src         = d.png_nn;
+    document.getElementById('nb-img-nn2').src        = d.png_nn2;
+    document.getElementById('nb-table-all').textContent   = d.table_all;
+    document.getElementById('nb-table-best3').textContent = d.table_best3;
 
-    const dark = {
+    var dark = {
       paper_bgcolor: '#111111', plot_bgcolor: '#111111',
       font: { color: '#f0f0ee', size: 11 },
       legend: { bgcolor: '#1c1c1c', bordercolor: 'rgba(255,255,255,0.07)', borderwidth: 1 },
@@ -1266,15 +1367,37 @@ h = 48  # forecast horizon (steps ahead)</pre>
       yaxis: { gridcolor: 'rgba(255,255,255,0.06)', zerolinecolor: 'rgba(255,255,255,0.1)' },
       margin: { t: 40, r: 20, b: 40, l: 55 }
     };
-    const cfg = { responsive: true, displayModeBar: false };
+    var cfg = { responsive: true, displayModeBar: false };
 
-    Plotly.newPlot('nb-plotly-all-fc',  NB.plotly_all_fc.data,  Object.assign({}, NB.plotly_all_fc.layout,  dark), cfg);
-    Plotly.newPlot('nb-plotly-all-cmp', NB.plotly_all_cmp.data, Object.assign({}, NB.plotly_all_cmp.layout, dark), cfg);
-    Plotly.newPlot('nb-plotly-b3-fc',   NB.plotly_b3_fc.data,   Object.assign({}, NB.plotly_b3_fc.layout,   dark), cfg);
-    Plotly.newPlot('nb-plotly-b3-cmp',  NB.plotly_b3_cmp.data,  Object.assign({}, NB.plotly_b3_cmp.layout,  dark), cfg);
+    Plotly.newPlot('nb-plotly-all-fc',  d.plotly_all_fc.data,  Object.assign({}, d.plotly_all_fc.layout,  dark), cfg);
+    Plotly.newPlot('nb-plotly-all-cmp', d.plotly_all_cmp.data, Object.assign({}, d.plotly_all_cmp.layout, dark), cfg);
+    Plotly.newPlot('nb-plotly-b3-fc',   d.plotly_b3_fc.data,   Object.assign({}, d.plotly_b3_fc.layout,   dark), cfg);
+    Plotly.newPlot('nb-plotly-b3-cmp',  d.plotly_b3_cmp.data,  Object.assign({}, d.plotly_b3_cmp.layout,  dark), cfg);
   }
 
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNotebook(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeNotebook(); });
+
+  function toggleNav() {
+    var nav = document.querySelector('nav');
+    var btn = document.querySelector('.hamburger');
+    nav.classList.toggle('open');
+    btn.textContent = nav.classList.contains('open') ? '✕' : '☰';
+  }
+
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      document.querySelector('nav').classList.remove('open');
+      document.querySelector('.hamburger').textContent = '☰';
+    });
+  });
+
+  document.addEventListener('click', function(e) {
+    var nav = document.querySelector('nav');
+    if (nav.classList.contains('open') && !nav.contains(e.target)) {
+      nav.classList.remove('open');
+      document.querySelector('.hamburger').textContent = '☰';
+    }
+  });
 </script>
 
 </body>

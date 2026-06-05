@@ -576,26 +576,30 @@
   /* Skills */
   .skills-cols {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 2.5rem;
   }
   .skill-group h4 {
     font-size: 10px; font-weight: 500;
     text-transform: uppercase; letter-spacing: 0.12em;
-    color: var(--accent); margin-bottom: 0.9rem;
+    color: var(--accent); margin-bottom: 1rem;
   }
-  .skill-list { display: flex; flex-direction: column; gap: 7px; }
-  .skill-item {
-    font-size: 13px; color: var(--muted);
-    display: flex; align-items: center; gap: 8px;
+  .skill-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    transition: border-color 0.2s, color 0.2s;
   }
-  .skill-item::before {
-    content: ''; width: 4px; height: 4px;
-    border-radius: 50%; background: var(--border);
-    flex-shrink: 0;
-  }
-  .skill-item:has(img)::before { display: none; }
-  .skill-item img { width: 16px; height: 16px; object-fit: contain; flex-shrink: 0; }
+  .skill-chip:hover { border-color: rgba(255,255,255,0.18); color: var(--text); }
+  .skill-chip img { width: 15px; height: 15px; object-fit: contain; flex-shrink: 0; }
 
   /* Education — reuses .exp-card styles, just different content */
   .edu-card {
@@ -713,6 +717,7 @@
     .hero { padding: 5rem 1.5rem 3rem; }
     .section { padding: 3.5rem 1.5rem; }
     .exp-date { display: none; }
+    .skills-cols { grid-template-columns: 1fr; }
   }
 
 </style>
@@ -772,8 +777,8 @@
     <h1><strong>Faustino</strong>Vazquez Gabino</h1>
 
     <p class="hero-sub">
-      <strong>Data Science Student at KU Eichstätt-Ingolstadt</strong>.<br>
-      <strong>Data Analyst Working student at  Siemens Mobility </strong>.<br>
+      <strong>Data Science Student at KU Eichstätt-Ingolstadt.</strong><br>
+      <strong>Data Analyst Working student at  Siemens Mobility.</strong><br>
       Hands-on experience in data engineering, machine learning, and BI at Audi AG and
       Siemens Mobility. Proven ability to design scalable data architectures and automate analytical workflows in industrial
       environments. Strong interest in large-scale data systems and the digital transformation of operational processes.
@@ -1014,43 +1019,43 @@
 
     <div class="skill-group">
       <h4>Languages</h4>
-      <div class="skill-list">
-        <span class="skill-item"><img src="assets/python.svg" alt="Python"> Python</span>
-        <span class="skill-item"><img src="assets/sql.svg" alt="SQL"> SQL</span>
-        <span class="skill-item"><img src="assets/r_script.svg" alt="R"> R</span>
-        <span class="skill-item"><img src="assets/c_plus_plus.svg" alt="C++"> C++</span>
+      <div class="skill-chips">
+        <span class="skill-chip"><img src="assets/python.svg" alt="Python"> Python</span>
+        <span class="skill-chip"><img src="assets/sql.svg" alt="SQL"> SQL</span>
+        <span class="skill-chip"><img src="assets/r_script.svg" alt="R"> R</span>
+        <span class="skill-chip"><img src="assets/c_plus_plus.svg" alt="C++"> C++</span>
       </div>
     </div>
 
     <div class="skill-group">
       <h4>Data Engineering</h4>
-      <div class="skill-list">
-        <span class="skill-item">ETL Pipelines</span>
-        <span class="skill-item">KNIME</span>
-        <span class="skill-item">Oracle Database</span>
-        <span class="skill-item">Power Automate</span>
-        <span class="skill-item">SharePoint</span>
+      <div class="skill-chips">
+        <span class="skill-chip"><img src="https://cdn.simpleicons.org/apacheairflow/ffffff" alt="ETL"> ETL Pipelines</span>
+        <span class="skill-chip"><img src="https://cdn.simpleicons.org/knime" alt="KNIME"> KNIME</span>
+        <span class="skill-chip"><img src="https://cdn.simpleicons.org/oracle" alt="Oracle"> Oracle Database</span>
+        <span class="skill-chip"><img src="https://cdn.simpleicons.org/powerautomate" alt="Power Automate"> Power Automate</span>
+        <span class="skill-chip"><img src="https://cdn.simpleicons.org/microsoftsharepoint" alt="SharePoint"> SharePoint</span>
       </div>
     </div>
 
     <div class="skill-group">
       <h4>Machine Learning</h4>
-      <div class="skill-list">
-        <span class="skill-item">Scikit-learn</span>
-        <span class="skill-item">Time Series</span>
-        <span class="skill-item">Statistical Modelling</span>
-        <span class="skill-item">Algorithmic Trading</span>
+      <div class="skill-chips">
+        <span class="skill-chip"><img src="https://cdn.simpleicons.org/scikitlearn" alt="Scikit-learn"> Scikit-learn</span>
+        <span class="skill-chip"><img src="https://cdn.simpleicons.org/plotly" alt="Time Series"> Time Series</span>
+        <span class="skill-chip"><img src="https://cdn.simpleicons.org/numpy" alt="Statistical Modelling"> Statistical Modelling</span>
+        <span class="skill-chip"><img src="https://cdn.simpleicons.org/binance" alt="Algorithmic Trading"> Algorithmic Trading</span>
       </div>
     </div>
 
     <div class="skill-group">
       <h4>Visualisation & Tools</h4>
-      <div class="skill-list">
-        <span class="skill-item">Power BI</span>
-        <span class="skill-item">Oracle APEX</span>
-        <span class="skill-item">Power Apps</span>
-        <span class="skill-item">Git & GitHub</span>
-        <span class="skill-item">Jupyter</span>
+      <div class="skill-chips">
+        <span class="skill-chip"><img src="https://cdn.simpleicons.org/powerbi" alt="Power BI"> Power BI</span>
+        <span class="skill-chip"><img src="https://cdn.simpleicons.org/oracle" alt="Oracle APEX"> Oracle APEX</span>
+        <span class="skill-chip"><img src="https://cdn.simpleicons.org/microsoftpowerapps" alt="Power Apps"> Power Apps</span>
+        <span class="skill-chip"><img src="https://cdn.simpleicons.org/github/ffffff" alt="Git & GitHub"> Git &amp; GitHub</span>
+        <span class="skill-chip"><img src="https://cdn.simpleicons.org/jupyter" alt="Jupyter"> Jupyter</span>
       </div>
     </div>
 
